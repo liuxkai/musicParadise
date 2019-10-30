@@ -27,7 +27,7 @@ public class ActiveController extends HttpServlet {
 					request.getRequestDispatcher("active.jsp").forward(request, response);
 					//request.getRequestDispatcher("login.html").forward(request, response);
 				}else{
-					request.setAttribute("isActive", -1);  //-1代表激活失败
+					request.setAttribute("isActive", -1);  //-1代表激活失败   修改了
 					request.getRequestDispatcher("active.jsp").forward(request, response);
 					//request.getRequestDispatcher("register.jsp").forward(request, response);
 				}
