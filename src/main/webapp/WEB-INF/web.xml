@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>musicPara</display-name>
+  <welcome-file-list>
+    <welcome-file>login.html</welcome-file>
+  </welcome-file-list >
+  <servlet>
+    <servlet-name>UserController</servlet-name>
+    <servlet-class>com.train.controller.UserController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserController</servlet-name>
+    <url-pattern>/UserController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ActiveController</servlet-name>
+    <servlet-class>com.train.controller.ActiveController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ActiveController</servlet-name>
+    <url-pattern>/ActiveController</url-pattern>
+  </servlet-mapping>
+</web-app>
