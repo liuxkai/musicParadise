@@ -80,7 +80,7 @@ public class SongDaoImpl implements SongDao {
 	@Override
 	public Long findCount() throws SQLException {
 		QueryRunner qr = new QueryRunner(DataSourceUtil.getDataSource());
-		String sql = "SELECT COUNT(1) FROM (SELECT a.song_id, a.song_name, b.singer_name, c.type_name, a.VV, a.url, a.lrc_url, a.upload_date FROM `song` AS a, `singer` AS b, `type` AS c WHERE a.Sid = b.Sid AND a.Tid = c.Tid) AS a";
+		String sql = "SELECT COUNT(1) FROM song";
 		//new BasicRowProcessor(new GenerousBeanProcessor()))解决数据库_命名与java小驼峰命名的冲突问题
 		Long result = (Long)qr.query(sql, new ScalarHandler<>());
 		return result;
@@ -100,6 +100,46 @@ public class SongDaoImpl implements SongDao {
 		QueryRunner qr = new QueryRunner(DataSourceUtil.getDataSource());
 		String sql = "update song set `Rid`=? where song_id=?";
 		int result = qr.update(sql, song.getRid(), song.getSongId());
+		return result;
+	}
+
+	@Override
+	public Long selectJdgqSongVV() throws SQLException {
+		QueryRunner qr = new QueryRunner(DataSourceUtil.getDataSource());
+		String sql = "SELECT count(1) FROM song WHERE Tid = 1";
+		Long result = (Long)qr.query(sql, new ScalarHandler<>());
+		return result;
+	}
+
+	@Override
+	public Long selectLxgqSongVV() throws SQLException {
+		QueryRunner qr = new QueryRunner(DataSourceUtil.getDataSource());
+		String sql = "SELECT count(1) FROM song WHERE Tid = 4";
+		Long result = (Long)qr.query(sql, new ScalarHandler<>());
+		return result;
+	}
+
+	@Override
+	public Long selectTggqSongVV() throws SQLException {
+		QueryRunner qr = new QueryRunner(DataSourceUtil.getDataSource());
+		String sql = "SELECT count(1) FROM song WHERE Tid = 2";
+		Long result = (Long)qr.query(sql, new ScalarHandler<>());
+		return result;
+	}
+
+	@Override
+	public Long selectTyqSongVV() throws SQLException {
+		QueryRunner qr = new QueryRunner(DataSourceUtil.getDataSource());
+		String sql = "SELECT count(1) FROM song WHERE Tid = 3";
+		Long result = (Long)qr.query(sql, new ScalarHandler<>());
+		return result;
+	}
+
+	@Override
+	public Long selectZxgqSongVV() throws SQLException {
+		QueryRunner qr = new QueryRunner(DataSourceUtil.getDataSource());
+		String sql = "SELECT count(1) FROM (SELECT b.song_name, b.url, b.lrc_url, b.singer_name, b.sex, b.birthday,b.hobby, b.photo_url, b.upload_date, album_name, album_introduce FROM (SELECT a.song_name, a.url, a.lrc_url, a.Sid, a.upload_date, singer_name, sex, birthday,hobby, photo_url FROM (SELECT Sid, song_name, url, lrc_url, upload_date FROM song) AS a, singer WHERE a.Sid = singer.Sid) AS b LEFT JOIN album ON album.Sid = b.Sid) AS c ORDER BY upload_date desc LIMIT 10";
+		Long result = (Long)qr.query(sql, new ScalarHandler<>());
 		return result;
 	}
 

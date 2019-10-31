@@ -1,7 +1,9 @@
 package com.train.service.impl;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.train.dao.SongDao;
 import com.train.dao.impl.SongDaoImpl;
@@ -62,6 +64,23 @@ public class SongServiceImpl implements SongService{
 	public int updataBySongId(Song song) throws SQLException {
 		SongDao songDaoImpl = new SongDaoImpl();
 		return songDaoImpl.updataRidBySongName(song);
+	}
+
+	@Override
+	public Map<String, Long> getTypeSongVV() throws SQLException {
+		SongDao songDaoImpl = new SongDaoImpl();
+		Map<String, Long> hashMap = new HashMap<>();
+		Long jdgq = songDaoImpl.selectJdgqSongVV();//获取经典歌曲点击量
+		Long lxgq = songDaoImpl.selectLxgqSongVV();//获取流行歌曲点击量
+		Long yggq = songDaoImpl.selectTggqSongVV();//获取摇滚歌曲点击量
+		Long tygq = songDaoImpl.selectTyqSongVV();//获取童谣歌曲点击量
+		Long zxgq = songDaoImpl.selectZxgqSongVV();//获取最新歌曲点击量
+		hashMap.put("jdgq", jdgq);
+		hashMap.put("lxgq", lxgq);
+		hashMap.put("yggq", yggq);
+		hashMap.put("tygq", tygq);
+		hashMap.put("zxgq", zxgq);
+		return hashMap;
 	}
 
 

@@ -23,5 +23,15 @@ public interface SongDao {
 
 	int updataRidBySongName(Song song) throws SQLException;
 
+	Long selectJdgqSongVV() throws SQLException;
+
+	Long selectLxgqSongVV() throws SQLException;
+
+	Long selectTggqSongVV() throws SQLException;
+
+	Long selectTyqSongVV() throws SQLException;
+
+	Long selectZxgqSongVV() throws SQLException;
+
 
 }

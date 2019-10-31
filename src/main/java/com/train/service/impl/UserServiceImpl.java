@@ -2,7 +2,9 @@ package com.train.service.impl;
 
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.train.dao.UserDao;
 import com.train.dao.impl.UserDaoImpl;
@@ -90,6 +92,17 @@ public class UserServiceImpl implements UserService{
 		Long isManCount = userDaoImpl.findSexIsManCount();
 		Double manRatio = (double) (isManCount*100/userCount);//计算出男性人数占总人数的百分之多少
 		return (int)Math.round(manRatio);
+	}
+
+	@Override
+	public Map<String, Double> getUserActiveRate() throws SQLException {
+		UserDao userDaoImpl = new UserDaoImpl();
+		Map<String, Double> hashMap = new HashMap<>();
+		Long userCount = userDaoImpl.findCount();
+		Long activeUser = userDaoImpl.findActiveUser();
+		Double userActiveRate = (double)(activeUser*100)/userCount;          //计算用户激活率
+		hashMap.put("userActiveRate", userActiveRate);
+		return hashMap;
 	}
 
 

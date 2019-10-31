@@ -4,6 +4,7 @@
   <welcome-file-list>
     <welcome-file>login.html</welcome-file>
   </welcome-file-list >
+  <!-- 
   <servlet>
     <servlet-name>UserController</servlet-name>
     <servlet-class>com.train.controller.UserController</servlet-class>
@@ -13,6 +14,7 @@
     <url-pattern>/UserController</url-pattern>
   </servlet-mapping>
   <servlet>
+ 
     <servlet-name>ActiveController</servlet-name>
     <servlet-class>com.train.controller.ActiveController</servlet-class>
   </servlet>
@@ -20,4 +22,38 @@
     <servlet-name>ActiveController</servlet-name>
     <url-pattern>/ActiveController</url-pattern>
   </servlet-mapping>
+    -->
+    <filter>
+    <filter-name>LoginFilter</filter-name>
+    <filter-class>com.train.filter.LoginFilter</filter-class>
+    <init-param>
+      <param-name>exceptPages</param-name>
+      <param-value>login.html,register.jsp,retrieve.jsp</param-value>
+    </init-param>
+    <init-param>
+      <param-name>exceptMethods</param-name>
+      <param-value>login,register</param-value>
+    </init-param>
+    <init-param>
+      <param-name>exceptPaths</param-name>
+      <param-value>static/,frame/,jquery-validation-1.19.1/,layui/</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <!-- 错误页面统一管理跳转到404.jsp -->
+  	<error-page>
+		<error-code>404</error-code>
+		<location>/WEB-INF/jsp/404.jsp</location>
+	</error-page>
+	<error-page>
+		<exception-type>java.lang.Throwable</exception-type>
+		<location>/WEB-INF/jsp/500.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/WEB-INF/jsp/404.jsp</location>
+	</error-page>
 </web-app>

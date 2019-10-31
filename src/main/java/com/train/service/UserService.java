@@ -2,6 +2,7 @@ package com.train.service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import com.train.entity.User;
 
@@ -24,6 +25,8 @@ public interface UserService {
 	public List<User> getPage(User onlineUser, int limit, int startIndex) throws SQLException;
 
 	public int getUserMaleFemaleRatio() throws SQLException;
+
+	public Map<String, Double> getUserActiveRate() throws SQLException;
 
 	
 

@@ -149,632 +149,13 @@
 		    
 		    
 		 <div id="main2" style="width: 420px;height:350px;"></div>
-	    <script type="text/javascript">
-	        var myChart = echarts.init(document.getElementById('main2'));
-	        
-	        var dataAxis = ['经典', '流行', '摇滚', '童谣', '最新'];
-	        var data = [220, 182, 191, 234, 290];
-	        var yMax = 500;
-	        var dataShadow = [];
-
-	        for (var i = 0; i < data.length; i++) {
-	            dataShadow.push(yMax);
-	        }
-
-	        option = {
-	            title: {
-	                text: '类型歌曲点击量',
-	            },
-	            xAxis: {
-	                data: dataAxis,
-	                axisLabel: {
-	                    inside: true,
-	                    textStyle: {
-	                        color: '#fff'
-	                    }
-	                },
-	                axisTick: {
-	                    show: false
-	                },
-	                axisLine: {
-	                    show: false
-	                },
-	                z: 10
-	            },
-	            yAxis: {
-	                axisLine: {
-	                    show: false
-	                },
-	                axisTick: {
-	                    show: false
-	                },
-	                axisLabel: {
-	                    textStyle: {
-	                        color: '#999'
-	                    }
-	                }
-	            },
-	            dataZoom: [
-	                {
-	                    type: 'inside'
-	                }
-	            ],
-	            series: [
-	                { // For shadow
-	                    type: 'bar',
-	                    itemStyle: {
-	                        normal: {color: 'rgba(0,0,0,0.05)'}
-	                    },
-	                    barGap:'-100%',
-	                    barCategoryGap:'40%',
-	                    data: dataShadow,
-	                    animation: false
-	                },
-	                {
-	                    type: 'bar',
-	                    itemStyle: {
-	                        normal: {
-	                            color: new echarts.graphic.LinearGradient(
-	                                0, 0, 0, 1,
-	                                [
-	                                    {offset: 0, color: '#83bff6'},
-	                                    {offset: 0.5, color: '#188df0'},
-	                                    {offset: 1, color: '#188df0'}
-	                                ]
-	                            )
-	                        },
-	                        emphasis: {
-	                            color: new echarts.graphic.LinearGradient(
-	                                0, 0, 0, 1,
-	                                [
-	                                    {offset: 0, color: '#2378f7'},
-	                                    {offset: 0.7, color: '#2378f7'},
-	                                    {offset: 1, color: '#83bff6'}
-	                                ]
-	                            )
-	                        }
-	                    },
-	                    data: data
-	                }
-	            ]
-	        };
-
-	        // Enable data zoom when user click bar.
-	        var zoomSize = 6;
-	        myChart.on('click', function (params) {
-	            console.log(dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)]);
-	            myChart.dispatchAction({
-	                type: 'dataZoom',
-	                startValue: dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)],
-	                endValue: dataAxis[Math.min(params.dataIndex + zoomSize / 2, data.length - 1)]
-	            });
-	        });
-       		myChart.setOption(option);
-	    </script>
+	    
   		</div>
   		<div id="datareport-2">
   		<div id="main3" style="width: 420px;height:350px;"></div>
-	    <script type="text/javascript">
-	        var myChart = echarts.init(document.getElementById('main3'));
-	        var dataArr = [{
-		        value: 50,
-		        name: '用户激活率'
-		    }];
-		    var color = new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
-		            offset: 0,
-		            color: '#5CF9FE' // 0% 处的颜色
-		        },
-		        {
-		            offset: 0.17,
-		            color: '#468EFD' // 100% 处的颜色
-		        },
-		        {
-		            offset: 0.9,
-		            color: '#468EFD' // 100% 处的颜色
-		        },
-		        {
-		            offset: 1,
-		            color: '#5CF9FE' // 100% 处的颜色
-		        }
-		    ]);
-		    var colorSet = [
-		        [0.91, color],
-		        [1, '#15337C']
-		    ];
-		    var rich = {
-				// 百分号
-		        white: {
-		            fontSize: 40,
-		            color: '#fff',
-		            fontWeight: '500',
-		            padding: [-90, 0, 0, 0]
-		        },
-				// 数字
-		        bule: {
-		            fontSize: 80,
-		            fontFamily: 'DINBold',
-		            color: '#fff',
-		            fontWeight: '700',
-		            padding: [-60, 0, 0, 0],
-		        },
-				// 用户激活率
-		        radius: {
-		            width: 250,
-		            height: 50,
-		            // lineHeight:80,
-		            borderWidth: 1,
-		            borderColor: '#0092F2',
-		            fontSize: 30,
-		            color: '#fff',
-		            backgroundColor: '#1B215B',
-		            borderRadius: 20,
-		            textAlign: 'center',
-		        },
-		        size: {
-		            height: 200,
-		            padding: [70, 0, 0, 0]
-		        }
-		    }
-		    option = {
-		        backgroundColor: 'rgb(255,255,255)',
-		        tooltip: {
-		            formatter: "{a} <br/>{b} : {c}%"
-		        },
-
-		        series: [{ //内圆
-		                type: 'pie',
-		                radius: '85%',
-		                center: ['50%', '50%'],
-		                z: 0,
-		                itemStyle: {
-		                    normal: {
-		                        color: new echarts.graphic.RadialGradient(.5, .5, 1, [{
-		                                offset: 0,
-		                                color: 'rgba(17,24,43,0)'
-		                            },
-		                            {
-		                                offset: .5,
-		                                // color: '#1E2B57'
-		                                color:'rgba(28,42,91,.6)'
-		                            },
-		                            {
-		                                offset: 1,
-		                                color: '#141C33',
-		                                // color:'rgba(17,24,43,0)'
-		                            }
-		                        ], false),
-		                        label: {
-		                            show: false
-		                        },
-		                        labelLine: {
-		                            show: false
-		                        }
-		                    },
-		                },
-		                hoverAnimation: false,
-		                label: {
-		                    show: false,
-		                },
-		                tooltip: {
-		                    show: false
-		                },
-		                data: [100],
-		            },
-		            {
-		                type: 'gauge',
-		                name: '外层辅助',
-		                radius: '74%',
-		                startAngle: '225',
-		                endAngle: '-45',
-		                splitNumber: '100',
-		                pointer: {
-		                    show: false
-		                },
-		                detail: {
-		                    show: false,
-		                },
-		                data: [{
-		                    value: 1
-		                }],
-		                // data: [{value: 1, name: 90}],
-		                title: {
-		                    show: true,
-		                    offsetCenter: [0, 30],
-		                    textStyle: {
-		                        color: '#fff',
-		                        fontStyle: 'normal',
-		                        fontWeight: 'normal',
-		                        fontFamily: '微软雅黑',
-		                        fontSize: 20,
-		                    }
-		                },
-		                axisLine: {
-		                    show: true,
-		                    lineStyle: {
-		                        color: [
-		                            [1, '#00FFFF']
-		                        ],
-		                        width: 2,
-		                        opacity: 1
-		                    }
-		                },
-		                axisTick: {
-		                    show: false
-		                },
-		                splitLine: {
-		                    show: true,
-		                    length: 20,
-		                    lineStyle: {
-		                        color: '#051932',
-		                        width: 0,
-		                        type: 'solid',
-		                    },
-		                },
-		                axisLabel: {
-		                    show: false
-		                }
-		            },
-		            {
-		                type: 'gauge',
-		                radius: '70%',
-		                startAngle: '225',
-		                endAngle: '-45',
-		                pointer: {
-		                    show: false
-		                },
-		                detail: {
-		                    formatter: function(value) {
-		                        var num = Math.round(value);
-		                        return '{bule|' + num + '}{white|%}' + '{size|' + '}\n{radius|用户激活率}';
-		                    },
-		                    rich: rich,
-		                    "offsetCenter": ['0%', "0%"],
-		                },
-		                data: dataArr,
-		                title: {
-		                    show: false,
-		                },
-		                axisLine: {
-		                    show: true,
-		                    lineStyle: {
-		                        color: colorSet,
-		                        width: 25,
-		                        // shadowBlur: 15,
-		                        // shadowColor: '#B0C4DE',
-		                        shadowOffsetX: 0,
-		                        shadowOffsetY: 0,
-		                        opacity: 1
-		                    }
-		                },
-		                axisTick: {
-		                    show: false
-		                },
-		                splitLine: {
-		                    show: false,
-		                    length: 25,
-		                    lineStyle: {
-		                        color: '#00377a',
-		                        width: 2,
-		                        type: 'solid',
-		                    },
-		                },
-		                axisLabel: {
-		                    show: false
-		                },
-		            },
-		            {
-		                name: '灰色内圈', //刻度背景
-		                type: 'gauge',
-		                z: 2,
-		                radius: '60%',
-		                startAngle: '225',
-		                endAngle: '-45',
-		                //center: ["50%", "75%"], //整体的位置设置
-		                axisLine: { // 坐标轴线
-		                    lineStyle: { // 属性lineStyle控制线条样式
-		                        color: [
-		                            [1, '#018DFF']
-		                        ],
-		                        width: 2,
-		                        opacity: 1, //刻度背景宽度
-		                    }
-		                },
-		                splitLine: {
-		                    show: false
-		                },
-		                // data: [{
-		                //     show: false,
-		                //     value: '80'
-		                // }], //作用不清楚
-		                axisLabel: {
-		                    show: false
-		                },
-		                pointer: {
-		                    show: false
-		                },
-		                axisTick: {
-		                    show: false
-		                },
-		                detail: {
-		                    show: 0
-		                }
-		            },
-		            {
-		                name: "白色圈刻度",
-		                type: "gauge",
-		                radius: "60%",
-		                startAngle: 225, //刻度起始
-		                endAngle: -45, //刻度结束
-		                z: 4,
-		                axisTick: {
-		                    show: false
-		                },
-		                splitLine: {
-		                    length: 16, //刻度节点线长度
-		                    lineStyle: {
-		                        width: 2,
-		                        color: 'rgba(1,244,255, 0.9)'
-		                    } //刻度节点线
-		                },
-		                axisLabel: {
-		                    color: 'rgba(255,255,255,0)',
-		                    fontSize: 12,
-		                }, //刻度节点文字颜色
-		                pointer: {
-		                    show: false
-		                },
-		                axisLine: {
-		                    lineStyle: {
-		                        opacity: 0
-		                    }
-		                },
-		                detail: {
-		                    show: false
-		                },
-		                data: [{
-		                    value: 0,
-		                    name: ""
-		                }]
-		            },
-		            { //内圆
-		                type: 'pie',
-		                radius: '56%',
-		                center: ['50%', '50%'],
-		                z: 1,
-		                itemStyle: {
-		                    normal: {
-		                        color: new echarts.graphic.RadialGradient(.5, .5, .8, [{
-		                                offset: 0,
-		                                color: '#4978EC'
-		                            },
-		                            {
-		                                offset: .5,
-		                                color: '#1E2B57'
-		                            },
-		                            {
-		                                offset: 1,
-		                                color: '#141F3D'
-		                            }
-		                        ], false),
-		                        label: {
-		                            show: false
-		                        },
-		                        labelLine: {
-		                            show: false
-		                        }
-		                    },
-		                },
-		                hoverAnimation: false,
-		                label: {
-		                    show: false,
-		                },
-		                tooltip: {
-		                    show: false
-		                },
-		                data: [100],
-		            },
-		        ]
-		    };
 	    
-    		myChart.setOption(option);
-	    </script>
 	    <div id="main4" style="width: 420px;height:350px;"></div>
-	    <script type="text/javascript">
-	        var myChart = echarts.init(document.getElementById('main4'));
-			    
-			    
-			    option = {
-		    backgroundColor:'#fff',
-		    series: [
-		        {
-		            name: '用户总数量',
-		            type: 'pie',
-		            radius: ['25%', '30%'],
-		            center: ['15%', '50%'],
-		            startAngle: 225,
-		            color: [new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-		                offset: 0,
-		                color: '#FDFF5C'
-		            }, {
-		                offset: 1,
-		                color: '#FFDB5C'
-		            }]), "transparent"],
-		            labelLine: {
-		                normal: {
-		                    show: false
-		                }
-		            },
-		            label: {
-		                    normal: {
-		                        position: 'center'
-		                    }
-		                },
-		            data: [{
-		                value: 100,
-		                 name: '用户总数量',
-		                    label: {
-		                        normal: {
-		                            formatter: '用户总数量',
-		                            textStyle: {
-		                                color: '#ff4d4d',
-		                                fontSize: 16
-		
-		                            }
-		                        }
-		                    }
-		            }, {
-		                value: 25,
-		                name: '%',
-		                    label: {
-		                        normal: {
-		                            formatter: '\n\n'+'3',
-		                            textStyle: {
-		                                color: '#007ac6',
-		                                fontSize: 30
-		
-		                            }
-		                        }
-		                    }
-		            }]
-		        },
-		        {
-		            name: '歌手总数量',
-		            type: 'pie',
-		            radius: ['25%', '30%'],
-		            center: ['50%', '50%'],
-		            startAngle: 225,
-		            color: [new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-		                offset: 0,
-		                color: '#9FE6B8'
-		            }, {
-		                offset: 1,
-		                color: '#32C5E9'
-		            }]), "transparent"],
-		            labelLine: {
-		                normal: {
-		                    show: false
-		                }
-		            },
-		            label: {
-		                    normal: {
-		                        position: 'center'
-		                    }
-		                },
-		            data: [{
-		                value: 75,
-		                 name: '歌手总数量',
-		                    label: {
-		                        normal: {
-		                            formatter: '歌手总数量',
-		                            textStyle: {
-		                                color: '#ff4d4d',
-		                                fontSize: 16
-		
-		                            }
-		                        }
-		                    }
-		            }, {
-		                value: 25,
-		                name: '%',
-		                    label: {
-		                        normal: {
-		                            formatter: '\n\n3534',
-		                            textStyle: {
-		                                color: '#007ac6',
-		                                fontSize: 30
-		
-		                            }
-		                        }
-		                    }
-		            },
-		            {
-		                value: 0,
-		                name: '%',
-		                    label: {
-		                        normal: {
-		                            formatter: '',
-		                            textStyle: {
-		                                color: '#fff',
-		                                fontSize: 16
-		
-		                            }
-		                        }
-		                    }
-		            }]
-		        },
-		        {
-		            name: '歌曲总数量',
-		            type: 'pie',
-		            radius: ['25%', '30%'],
-		            center: ['85%', '50%'],
-		            startAngle: 225,
-		            labelLine: {
-		                normal: {
-		                    show: false
-		                }
-		            },
-		            label: {
-		                    normal: {
-		                        position: 'center'
-		                    }
-		                },
-		            data: [{
-		                value: 75,
-		                "itemStyle": {
-		                    "normal": {
-		                        "color": new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-		                            "offset": 0,
-		                            "color": '#FF9F7F'
-		                        }, {
-		                            "offset": 1,
-		                            "color": '#FB7293'
-		                        }]),
-		                    }
-		                },
-		                 name: '歌曲总数量',
-		                    label: {
-		                        normal: {
-		                            formatter: '歌曲总数量',
-		                            textStyle: {
-		                                color: '#ff4d4d',
-		                                fontSize: 16
-		
-		                            }
-		                        }
-		                    }
-		            }, {
-		                value: 25,
-		                name: '%',
-		                    label: {
-		                        normal: {
-		                            formatter: '\n\n3534',
-		                            textStyle: {
-		                                color: '#f125ff',
-		                                fontSize: 30
-		
-		                            }
-		                        }
-		                    }
-		            },
-		            {
-		                value: 0,
-		                name: '%',
-		                    label: {
-		                        normal: {
-		                            formatter: '',
-		                            textStyle: {
-		                                color: '#fff',
-		                                fontSize: 16
-		
-		                            }
-		                        }
-		                    }
-		            }]
-		        }
-		    ]
-		};
-   		myChart.setOption(option);
-   	    </script>	    
+	    
   		</div>
   	</div>
   	
@@ -1233,7 +614,7 @@ function roleToStr(role) {
 					slider = layui.slider //滑块
 
 				//向世界问个好
-				layer.msg('Hello World');
+				layer.msg('欢迎来到音乐天堂后台管理');
 
 				//监听Tab切换
 				element.on('tab(demo)', function(data) {
@@ -1468,8 +849,6 @@ function roleToStr(role) {
 					,
 					slider = layui.slider //滑块
 
-				//向世界问个好
-				layer.msg('Hello World');
 
 				//监听Tab切换
 				element.on('tab(demo)', function(data) {
@@ -1796,8 +1175,6 @@ function roleToStr(role) {
 					,
 					slider = layui.slider //滑块
 
-				//向世界问个好
-				layer.msg('Hello World');
 
 				//监听Tab切换
 				element.on('tab(demo)', function(data) {
@@ -2000,9 +1377,6 @@ function roleToStr(role) {
 					,
 					slider = layui.slider //滑块
 
-				//向世界问个好
-				layer.msg('Hello World');
-
 				//监听Tab切换
 				element.on('tab(demo)', function(data) {
 					layer.tips('切换了 ' + data.index + '：' + this.innerHTML, this, {
@@ -2188,21 +1562,6 @@ function roleToStr(role) {
 					.removeClass('layui-hide');
 			});
 		</script>
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		<!-- 数据分析   获取用户及歌手男性人数和总数，计算出男女比例-->
 		<script type="text/javascript">
@@ -2420,5 +1779,659 @@ function roleToStr(role) {
 			})	
 		    </script>
 		
+		
+		<script type="text/javascript">
+		$(function(){
+			var result = $.ajax({
+				url : 'JsonDataInterface?method=typeSongVV',
+				async : false,   //同步请求
+				dataType: 'json',
+			});
+			// console.log(result);
+	        var maleFemaleRatio = result.responseJSON;
+	        //console.log(maleFemaleRatio);
+	        var myChart = echarts.init(document.getElementById('main2'));
+	        
+	        var dataAxis = ['经典', '流行', '摇滚', '童谣', '最新'];
+	        var data = [maleFemaleRatio.jdgq, maleFemaleRatio.lxgq, maleFemaleRatio.yggq, maleFemaleRatio.tygq, maleFemaleRatio.zxgq];
+	        var yMax = 10;   //y轴最大值
+	        var dataShadow = [];
+
+	        for (var i = 0; i < data.length; i++) {
+	            dataShadow.push(yMax);
+	        }
+
+	        option = {
+	            title: {
+	                text: '类型歌曲点击量',
+	            },
+	            xAxis: {
+	                data: dataAxis,
+	                axisLabel: {
+	                    inside: true,
+	                    textStyle: {
+	                        color: '#fff'
+	                    }
+	                },
+	                axisTick: {
+	                    show: false
+	                },
+	                axisLine: {
+	                    show: false
+	                },
+	                z: 10
+	            },
+	            yAxis: {
+	                axisLine: {
+	                    show: false
+	                },
+	                axisTick: {
+	                    show: false
+	                },
+	                axisLabel: {
+	                    textStyle: {
+	                        color: '#999'
+	                    }
+	                }
+	            },
+	            dataZoom: [
+	                {
+	                    type: 'inside'
+	                }
+	            ],
+	            series: [
+	                { // For shadow
+	                    type: 'bar',
+	                    itemStyle: {
+	                        normal: {color: 'rgba(0,0,0,0.05)'}
+	                    },
+	                    barGap:'-100%',
+	                    barCategoryGap:'40%',
+	                    data: dataShadow,
+	                    animation: false
+	                },
+	                {
+	                    type: 'bar',
+	                    itemStyle: {
+	                        normal: {
+	                            color: new echarts.graphic.LinearGradient(
+	                                0, 0, 0, 1,
+	                                [
+	                                    {offset: 0, color: '#83bff6'},
+	                                    {offset: 0.5, color: '#188df0'},
+	                                    {offset: 1, color: '#188df0'}
+	                                ]
+	                            )
+	                        },
+	                        emphasis: {
+	                            color: new echarts.graphic.LinearGradient(
+	                                0, 0, 0, 1,
+	                                [
+	                                    {offset: 0, color: '#2378f7'},
+	                                    {offset: 0.7, color: '#2378f7'},
+	                                    {offset: 1, color: '#83bff6'}
+	                                ]
+	                            )
+	                        }
+	                    },
+	                    data: data
+	                }
+	            ]
+	        };
+
+	        // Enable data zoom when user click bar.
+	        var zoomSize = 6;
+	        myChart.on('click', function (params) {
+	            console.log(dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)]);
+	            myChart.dispatchAction({
+	                type: 'dataZoom',
+	                startValue: dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)],
+	                endValue: dataAxis[Math.min(params.dataIndex + zoomSize / 2, data.length - 1)]
+	            });
+	        });
+       		myChart.setOption(option);
+		})		
+	    </script>
+	    
+	    
+	 <script type="text/javascript">
+	    $(function(){
+			var result = $.ajax({
+				url : 'JsonDataInterface?method=userActiveRate',
+				async : false,   //同步请求
+				dataType: 'json',
+			});
+			//console.log(result);
+	        var maleFemaleRatio = result.responseJSON;
+	        //console.log(maleFemaleRatio);
+	        var myChart = echarts.init(document.getElementById('main3'));
+	        var dataArr = [{
+		        value: maleFemaleRatio.userActiveRate,
+		        name: '用户激活率'
+		    }];
+		    var color = new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
+		            offset: 0,
+		            color: '#5CF9FE' // 0% 处的颜色
+		        },
+		        {
+		            offset: 0.17,
+		            color: '#468EFD' // 100% 处的颜色
+		        },
+		        {
+		            offset: 0.9,
+		            color: '#468EFD' // 100% 处的颜色
+		        },
+		        {
+		            offset: 1,
+		            color: '#5CF9FE' // 100% 处的颜色
+		        }
+		    ]);
+		    var colorSet = [
+		        [0.91, color],
+		        [1, '#15337C']
+		    ];
+		    var rich = {
+				// 百分号
+		        white: {
+		            fontSize: 40,
+		            color: '#fff',
+		            fontWeight: '500',
+		            padding: [-90, 0, 0, 0]
+		        },
+				// 数字
+		        bule: {
+		            fontSize: 80,
+		            fontFamily: 'DINBold',
+		            color: '#fff',
+		            fontWeight: '700',
+		            padding: [-60, 0, 0, 0],
+		        },
+				// 用户激活率
+		        radius: {
+		            width: 250,
+		            height: 50,
+		            // lineHeight:80,
+		            borderWidth: 1,
+		            borderColor: '#0092F2',
+		            fontSize: 30,
+		            color: '#fff',
+		            backgroundColor: '#1B215B',
+		            borderRadius: 20,
+		            textAlign: 'center',
+		        },
+		        size: {
+		            height: 200,
+		            padding: [70, 0, 0, 0]
+		        }
+		    }
+		    option = {
+		        backgroundColor: 'rgb(255,255,255)',
+		        tooltip: {
+		            formatter: "{a} <br/>{b} : {c}%"
+		        },
+
+		        series: [{ //内圆
+		                type: 'pie',
+		                radius: '85%',
+		                center: ['50%', '50%'],
+		                z: 0,
+		                itemStyle: {
+		                    normal: {
+		                        color: new echarts.graphic.RadialGradient(.5, .5, 1, [{
+		                                offset: 0,
+		                                color: 'rgba(17,24,43,0)'
+		                            },
+		                            {
+		                                offset: .5,
+		                                // color: '#1E2B57'
+		                                color:'rgba(28,42,91,.6)'
+		                            },
+		                            {
+		                                offset: 1,
+		                                color: '#141C33',
+		                                // color:'rgba(17,24,43,0)'
+		                            }
+		                        ], false),
+		                        label: {
+		                            show: false
+		                        },
+		                        labelLine: {
+		                            show: false
+		                        }
+		                    },
+		                },
+		                hoverAnimation: false,
+		                label: {
+		                    show: false,
+		                },
+		                tooltip: {
+		                    show: false
+		                },
+		                data: [100],
+		            },
+		            {
+		                type: 'gauge',
+		                name: '外层辅助',
+		                radius: '74%',
+		                startAngle: '225',
+		                endAngle: '-45',
+		                splitNumber: '100',
+		                pointer: {
+		                    show: false
+		                },
+		                detail: {
+		                    show: false,
+		                },
+		                data: [{
+		                    value: 1
+		                }],
+		                // data: [{value: 1, name: 90}],
+		                title: {
+		                    show: true,
+		                    offsetCenter: [0, 30],
+		                    textStyle: {
+		                        color: '#fff',
+		                        fontStyle: 'normal',
+		                        fontWeight: 'normal',
+		                        fontFamily: '微软雅黑',
+		                        fontSize: 20,
+		                    }
+		                },
+		                axisLine: {
+		                    show: true,
+		                    lineStyle: {
+		                        color: [
+		                            [1, '#00FFFF']
+		                        ],
+		                        width: 2,
+		                        opacity: 1
+		                    }
+		                },
+		                axisTick: {
+		                    show: false
+		                },
+		                splitLine: {
+		                    show: true,
+		                    length: 20,
+		                    lineStyle: {
+		                        color: '#051932',
+		                        width: 0,
+		                        type: 'solid',
+		                    },
+		                },
+		                axisLabel: {
+		                    show: false
+		                }
+		            },
+		            {
+		                type: 'gauge',
+		                radius: '70%',
+		                startAngle: '225',
+		                endAngle: '-45',
+		                pointer: {
+		                    show: false
+		                },
+		                detail: {
+		                    formatter: function(value) {
+		                        var num = Math.round(value);
+		                        return '{bule|' + num + '}{white|%}' + '{size|' + '}\n{radius|用户激活率}';
+		                    },
+		                    rich: rich,
+		                    "offsetCenter": ['0%', "0%"],
+		                },
+		                data: dataArr,
+		                title: {
+		                    show: false,
+		                },
+		                axisLine: {
+		                    show: true,
+		                    lineStyle: {
+		                        color: colorSet,
+		                        width: 25,
+		                        // shadowBlur: 15,
+		                        // shadowColor: '#B0C4DE',
+		                        shadowOffsetX: 0,
+		                        shadowOffsetY: 0,
+		                        opacity: 1
+		                    }
+		                },
+		                axisTick: {
+		                    show: false
+		                },
+		                splitLine: {
+		                    show: false,
+		                    length: 25,
+		                    lineStyle: {
+		                        color: '#00377a',
+		                        width: 2,
+		                        type: 'solid',
+		                    },
+		                },
+		                axisLabel: {
+		                    show: false
+		                },
+		            },
+		            {
+		                name: '灰色内圈', //刻度背景
+		                type: 'gauge',
+		                z: 2,
+		                radius: '60%',
+		                startAngle: '225',
+		                endAngle: '-45',
+		                //center: ["50%", "75%"], //整体的位置设置
+		                axisLine: { // 坐标轴线
+		                    lineStyle: { // 属性lineStyle控制线条样式
+		                        color: [
+		                            [1, '#018DFF']
+		                        ],
+		                        width: 2,
+		                        opacity: 1, //刻度背景宽度
+		                    }
+		                },
+		                splitLine: {
+		                    show: false
+		                },
+		                // data: [{
+		                //     show: false,
+		                //     value: '80'
+		                // }], //作用不清楚
+		                axisLabel: {
+		                    show: false
+		                },
+		                pointer: {
+		                    show: false
+		                },
+		                axisTick: {
+		                    show: false
+		                },
+		                detail: {
+		                    show: 0
+		                }
+		            },
+		            {
+		                name: "白色圈刻度",
+		                type: "gauge",
+		                radius: "60%",
+		                startAngle: 225, //刻度起始
+		                endAngle: -45, //刻度结束
+		                z: 4,
+		                axisTick: {
+		                    show: false
+		                },
+		                splitLine: {
+		                    length: 16, //刻度节点线长度
+		                    lineStyle: {
+		                        width: 2,
+		                        color: 'rgba(1,244,255, 0.9)'
+		                    } //刻度节点线
+		                },
+		                axisLabel: {
+		                    color: 'rgba(255,255,255,0)',
+		                    fontSize: 12,
+		                }, //刻度节点文字颜色
+		                pointer: {
+		                    show: false
+		                },
+		                axisLine: {
+		                    lineStyle: {
+		                        opacity: 0
+		                    }
+		                },
+		                detail: {
+		                    show: false
+		                },
+		                data: [{
+		                    value: 0,
+		                    name: ""
+		                }]
+		            },
+		            { //内圆
+		                type: 'pie',
+		                radius: '56%',
+		                center: ['50%', '50%'],
+		                z: 1,
+		                itemStyle: {
+		                    normal: {
+		                        color: new echarts.graphic.RadialGradient(.5, .5, .8, [{
+		                                offset: 0,
+		                                color: '#4978EC'
+		                            },
+		                            {
+		                                offset: .5,
+		                                color: '#1E2B57'
+		                            },
+		                            {
+		                                offset: 1,
+		                                color: '#141F3D'
+		                            }
+		                        ], false),
+		                        label: {
+		                            show: false
+		                        },
+		                        labelLine: {
+		                            show: false
+		                        }
+		                    },
+		                },
+		                hoverAnimation: false,
+		                label: {
+		                    show: false,
+		                },
+		                tooltip: {
+		                    show: false
+		                },
+		                data: [100],
+		            },
+		        ]
+		    };
+	    
+    		myChart.setOption(option);
+	    })	
+	  </script>
+	  
+	<script type="text/javascript">
+	  $(function(){
+			var result = $.ajax({
+				url : 'JsonDataInterface?method=count',
+				async : false,   //同步请求
+				dataType: 'json',
+			});
+			console.log(result);
+	        var maleFemaleRatio = result.responseJSON;
+	        console.log(maleFemaleRatio);
+	        var myChart = echarts.init(document.getElementById('main4'));
+			option = {
+		    backgroundColor:'#fff',
+		    series: [
+		        {
+		            name: '用户总数量',
+		            type: 'pie',
+		            radius: ['25%', '30%'],
+		            center: ['15%', '50%'],
+		            startAngle: 225,
+		            color: [new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+		                offset: 0,
+		                color: '#FDFF5C'
+		            }, {
+		                offset: 1,
+		                color: '#FFDB5C'
+		            }]), "transparent"],
+		            labelLine: {
+		                normal: {
+		                    show: false
+		                }
+		            },
+		            label: {
+		                    normal: {
+		                        position: 'center'
+		                    }
+		                },
+		            data: [{
+		                value: 100,
+		                 name: '用户总数量',
+		                    label: {
+		                        normal: {
+		                            formatter: '用户总数量',
+		                            textStyle: {
+		                                color: '#ff4d4d',
+		                                fontSize: 16
+		
+		                            }
+		                        }
+		                    }
+		            }, {
+		                value: 25,
+		                name: '%',
+		                    label: {
+		                        normal: {
+		                            formatter: '\n\n'+maleFemaleRatio.userCount,
+		                            textStyle: {
+		                                color: '#007ac6',
+		                                fontSize: 30
+		
+		                            }
+		                        }
+		                    }
+		            }]
+		        },
+		        {
+		            name: '歌手总数量',
+		            type: 'pie',
+		            radius: ['25%', '30%'],
+		            center: ['50%', '50%'],
+		            startAngle: 225,
+		            color: [new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+		                offset: 0,
+		                color: '#9FE6B8'
+		            }, {
+		                offset: 1,
+		                color: '#32C5E9'
+		            }]), "transparent"],
+		            labelLine: {
+		                normal: {
+		                    show: false
+		                }
+		            },
+		            label: {
+		                    normal: {
+		                        position: 'center'
+		                    }
+		                },
+		            data: [{
+		                value: 75,
+		                 name: '歌手总数量',
+		                    label: {
+		                        normal: {
+		                            formatter: '歌手总数量',
+		                            textStyle: {
+		                                color: '#ff4d4d',
+		                                fontSize: 16
+		
+		                            }
+		                        }
+		                    }
+		            }, {
+		                value: 25,
+		                name: '%',
+		                    label: {
+		                        normal: {
+		                            formatter: '\n\n'+maleFemaleRatio.singerCount,
+		                            textStyle: {
+		                                color: '#007ac6',
+		                                fontSize: 30
+		
+		                            }
+		                        }
+		                    }
+		            },
+		            {
+		                value: 0,
+		                name: '%',
+		                    label: {
+		                        normal: {
+		                            formatter: '',
+		                            textStyle: {
+		                                color: '#fff',
+		                                fontSize: 16
+		
+		                            }
+		                        }
+		                    }
+		            }]
+		        },
+		        {
+		            name: '歌曲总数量',
+		            type: 'pie',
+		            radius: ['25%', '30%'],
+		            center: ['85%', '50%'],
+		            startAngle: 225,
+		            labelLine: {
+		                normal: {
+		                    show: false
+		                }
+		            },
+		            label: {
+		                    normal: {
+		                        position: 'center'
+		                    }
+		                },
+		            data: [{
+		                value: 75,
+		                "itemStyle": {
+		                    "normal": {
+		                        "color": new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+		                            "offset": 0,
+		                            "color": '#FF9F7F'
+		                        }, {
+		                            "offset": 1,
+		                            "color": '#FB7293'
+		                        }]),
+		                    }
+		                },
+		                 name: '歌曲总数量',
+		                    label: {
+		                        normal: {
+		                            formatter: '歌曲总数量',
+		                            textStyle: {
+		                                color: '#ff4d4d',
+		                                fontSize: 16
+		
+		                            }
+		                        }
+		                    }
+		            }, {
+		                value: 25,
+		                name: '%',
+		                    label: {
+		                        normal: {
+		                            formatter: '\n\n'+maleFemaleRatio.songCount,
+		                            textStyle: {
+		                                color: '#f125ff',
+		                                fontSize: 30
+		
+		                            }
+		                        }
+		                    }
+		            },
+		            {
+		                value: 0,
+		                name: '%',
+		                    label: {
+		                        normal: {
+		                            formatter: '',
+		                            textStyle: {
+		                                color: '#fff',
+		                                fontSize: 16
+		
+		                            }
+		                        }
+		                    }
+		            }]
+		        }
+		    ]
+		};
+   		myChart.setOption(option);
+	  })	
+   	  </script>	    
 </body>
 </html>

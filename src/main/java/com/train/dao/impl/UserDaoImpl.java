@@ -241,5 +241,13 @@ public class UserDaoImpl implements UserDao{
 		return result;
 	}
 
+	@Override
+	public Long findActiveUser() throws SQLException {
+		QueryRunner qr = new QueryRunner(DataSourceUtil.getDataSource());
+		String sql = "select count(1) from user where state = 1";
+		Long result = (Long)qr.query(sql, new ScalarHandler<>());
+		return result;
+	}
+
 
 }

@@ -167,11 +167,11 @@
         <div class="half-footer">
         <ul>
         	<h3>联系我们</h3>
-            <li><a href="index.html">音乐国际</a></li>
-            <li><a href="single.html">中国</a></li>
-            <li><a href="single.html">联系电话:18888888888</a></li>
-            <li><a href="single.html">musicparadise@gmail.com</a></li>
-            <li><a href="feedback.html">地址:北大青鸟</a></li>
+            <li><a href="http://www.bdqn.cn/">音乐国际</a></li>
+            <li><a href="http://www.bdqn.cn/">中国</a></li>
+            <li><a href="http://www.bdqn.cn/">联系电话:18888888888</a></li>
+            <li><a href="http://www.bdqn.cn/">musicparadise@gmail.com</a></li>
+            <li><a href="http://www.bdqn.cn/">地址:北大青鸟</a></li>
         </ul>
         <div class="footer-pic"><img src="static/images/foot-icon.png" alt="" /></div>
         </div>

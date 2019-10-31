@@ -2,6 +2,7 @@ package com.train.service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import com.train.entity.Song;
 
@@ -22,6 +23,8 @@ public interface SongService {
 	Song getOne(Song build) throws SQLException;
 
 	int updataBySongId(Song song) throws SQLException;
+
+	Map<String, Long> getTypeSongVV() throws SQLException;
 
 
 }

@@ -17,14 +17,17 @@ import com.train.entity.JsonData;
 import com.train.entity.Song;
 import com.train.service.JsonDataService;
 import com.train.service.SingerService;
+import com.train.service.SongService;
 import com.train.service.UserService;
 import com.train.service.impl.JsonDataServiceImpl;
 import com.train.service.impl.SingerServiceImpl;
+import com.train.service.impl.SongServiceImpl;
 import com.train.service.impl.UserServiceImpl;
 import com.train.util.PlayerListUtil;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import redis.clients.jedis.Jedis;
 
 /**
  * json数据接口，用来或取数据库中歌曲信息（如：歌手照片地址，歌曲地址，歌曲名称，歌词地址，歌手信息）
@@ -106,7 +109,74 @@ public class JsonDataInterface extends HttpServlet {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+			break;
+		case "typeSongVV":                //管理员后台页面获取歌曲类型点击量	
+			try {
+				typeSongVV(request, response);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			break;
+		case "userActiveRate":
+			try {
+				userActiveRate(request, response);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			break;
+		case "count":
+			try {
+				count(request, response);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			break;
 		}	
+	}
+	private void count(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException {
+		Object onlineUser = request.getSession().getAttribute("onlineUser");
+		if(onlineUser != null && !onlineUser.equals("")) {
+			UserService userServiceImpl = new UserServiceImpl();
+			SingerService singerServiceImpl = new SingerServiceImpl();
+			SongService songServiceImpl = new SongServiceImpl();
+			//获取用户和歌曲及歌手总数量
+			Long userCount = userServiceImpl.getCount();
+			Long songCount = songServiceImpl.getCount();
+			Long singerCount = singerServiceImpl.getCount();
+			
+			Map<String, Long> hashMap = new HashMap<>();
+			hashMap.put("userCount", userCount);
+			hashMap.put("songCount", songCount);
+			hashMap.put("singerCount", singerCount);
+			
+			JSONObject array=JSONObject.fromObject(hashMap);
+			//System.out.println("将类转为json对象 JsonDataInterface  第148行  "+array.toString());
+			response.getWriter().print(array);
+		}
+		
+	}
+	private void userActiveRate(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+		Object onlineUser = request.getSession().getAttribute("onlineUser");
+		if(onlineUser != null && !onlineUser.equals("")) {
+			UserService userServiceImpl = new UserServiceImpl();
+			//获取用户激活率
+			Map<String, Double> hashMap = userServiceImpl.getUserActiveRate();
+			JSONObject array=JSONObject.fromObject(hashMap);
+			System.out.println("将类转为json对象 JsonDataInterface  第131行  "+array.toString());
+			response.getWriter().print(array);
+		}
+	}
+	private void typeSongVV(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+		Object onlineUser = request.getSession().getAttribute("onlineUser");
+		if(onlineUser != null && !onlineUser.equals("")) {
+			SongService songServiceImpl = new SongServiceImpl();
+			//获取各个类型歌曲的播放量
+			Map<String, Long> hashMap = songServiceImpl.getTypeSongVV();
+			JSONObject array=JSONObject.fromObject(hashMap);
+			System.out.println("将类转为json对象 JsonDataInterface  第124行  "+array.toString());
+			response.getWriter().print(array);
+		}
+		
 	}
 	private void maleFemaleRatio(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
 		Object onlineUser = request.getSession().getAttribute("onlineUser");
@@ -127,13 +197,13 @@ public class JsonDataInterface extends HttpServlet {
 			hashMap.put("singerMan", singermaleFemaleRatio);
 			hashMap.put("singerWoman", (100-singermaleFemaleRatio));
 			JSONObject array=JSONObject.fromObject(hashMap);
-			System.out.println("将类转为json对象 JsonDataInterface  第130行  "+array.toString());
+			//System.out.println("将类转为json对象 JsonDataInterface  第130行  "+array.toString());
 			response.getWriter().print(array);
 		}
 		
 	}
 	private void recommendSongMenu(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-		//前端加载页面(player.jsp)时发出ajax请求，根基Rid获取指定推荐歌单的歌曲
+		//前端加载页面(player.jsp)时发出ajax请求，根据Rid获取指定推荐歌单的歌曲
 		String Rid = request.getParameter("Rid");
 		Long rid = null;
 		if(Rid != null && !Rid.equals("")) {
@@ -158,7 +228,7 @@ public class JsonDataInterface extends HttpServlet {
 			}	 
 			//将类转为json对象    
 			JSONArray array=JSONArray.fromObject(playerList);    
-			System.out.println("将类转为json对象 JsonDataInterface  第123行  "+array.toString());
+			//System.out.println("将类转为json对象 JsonDataInterface  第123行  "+array.toString());
 			response.getWriter().print(array);
 		}
 		
@@ -186,7 +256,7 @@ public class JsonDataInterface extends HttpServlet {
 			}	 
 			//将类转为json对象    
 			JSONArray array=JSONArray.fromObject(playerList);    
-			System.out.println("将类转为json对象 JsonDataInterface  第151行  "+array.toString());
+			//System.out.println("将类转为json对象 JsonDataInterface  第151行  "+array.toString());
 			response.getWriter().print(array);
 		}
 		
@@ -199,6 +269,14 @@ public class JsonDataInterface extends HttpServlet {
 			List<Song> songList = jsonDataServiceImpl.findMusicByRankingMusic();
 			//将类转为json对象    
 			JSONArray array=JSONArray.fromObject(songList);    
+			
+			//使用redis数据库，用户查询的这页数据放入redis数据库中，并设置有效时间为1分钟，防止黑客攻击反复查数据导致mysql瘫痪
+	        String key = request.getQueryString();
+	        Jedis jedis = new Jedis("localhost", 6379);
+	        jedis.auth("123456");
+	        jedis.set(key, JSONArray.fromObject(array).toString());
+	        jedis.expire(key, 60);//设置有效期1分钟
+			
 			System.out.println("将类转为json对象 JsonDataInterface  第164行  "+array.toString());
 			response.getWriter().print(array);
 		}
@@ -252,6 +330,7 @@ public class JsonDataInterface extends HttpServlet {
 					playerList.add(playerListUtil);
 				}
 			}	 
+			
 			//将类转为json对象    
 			JSONArray array=JSONArray.fromObject(playerList);    
 			//System.out.println("将类转为json对象  "+array.toString()); 
@@ -279,7 +358,7 @@ public class JsonDataInterface extends HttpServlet {
 			List<PlayerListUtil> playerList = new ArrayList<>();
 			//System.out.println(jsonDataList);
 			for(JsonData jsonData:jsonDataList){
-				System.out.println("JsonDataInterface第244行--"+jsonData);
+				//System.out.println("JsonDataInterface第351行--"+jsonData);
 				PlayerListUtil playerListUtil = null;
 				if(jsonData != null) {
 					playerListUtil = PlayerListUtil.builder()
@@ -294,8 +373,8 @@ public class JsonDataInterface extends HttpServlet {
 			//将类转为json对象    
 			JSONArray array=JSONArray.fromObject(playerList);    
 			//System.out.println("将类转为json对象  "+array.toString()); 
-			System.out.println("来到了JsonDataInterface界面259行");
-			System.out.println("将类转为json对象  "+array.toString());
+			//System.out.println("来到了JsonDataInterface界面259行");
+			//System.out.println("将类转为json对象  "+array.toString());
 			response.getWriter().print(array);
 		}
 	}

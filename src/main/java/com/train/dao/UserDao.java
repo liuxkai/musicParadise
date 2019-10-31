@@ -27,4 +27,6 @@ public interface UserDao {
 
 	public Long findSexIsManCount() throws SQLException;
 
+	public Long findActiveUser() throws SQLException;
+
 }
